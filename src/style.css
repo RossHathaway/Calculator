@@ -11,6 +11,12 @@ body {
   margin: 0;
 }
 
+button {
+  flex: 1 1 60px;
+  width: 60px;
+  height: 60px;
+}
+
 #root {
   display: flex;
   align-items: center;
@@ -25,4 +31,30 @@ body {
   width: 90%;
   height: 90%;
   max-height: 750px;
+}
+
+.screen {
+  height: 25%;
+}
+
+.keys {
+  display: flex;
+}
+
+.left-keys {
+  flex: 1;
+}
+
+.right-keys {
+  display: flex;
+  flex-direction: column;
+}
+
+.top-left-keys {
+  display: flex;
+}
+
+.bottom-left-keys {
+  display: flex;
+  flex-wrap: wrap;
 }
