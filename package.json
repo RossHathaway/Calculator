@@ -1,0 +1,18 @@
+{
+  "name": "source-toad-interview-problem-two",
+  "version": "1.0.0",
+  "description": "A calculator app similar to the iPhone calculator",
+  "scripts": {
+    "devBuild": "parcel src/index.html",
+    "prodBuild": "parcel build src/index.html"
+  },
+  "author": "Ross Hathaway",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.3"
+  }
+}
