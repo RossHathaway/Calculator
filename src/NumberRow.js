@@ -4,7 +4,13 @@ const NumberRow = props => (
   <div className="bottom-left-keys">
     {props.numbers.map(function makeNumBtn(num) {
       return (
-        <button className="btn-number" onClick={props.submitNumber} key={num}>
+        <button
+          className="btn-number"
+          onClick={function() {
+            props.submitNumber(num);
+          }}
+          key={num}
+        >
           {num}
         </button>
       );
