@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import NumberSection from "./NumberSection";
+import NumberRow from "./NumberRow";
 import OperatorSection from "./OperatorSection";
 
 export default class Calc extends React.Component {
@@ -25,7 +25,10 @@ export default class Calc extends React.Component {
               <button>+/-</button>
               <button>%</button>
             </div>
-            <NumberSection />
+            <NumberRow numbers={[7, 8, 9]} />
+            <NumberRow numbers={[4, 5, 6]} />
+            <NumberRow numbers={[1, 2, 3]} />
+            <NumberRow numbers={[0, "."]} />
           </div>
           <div className="right-keys">
             <OperatorSection />

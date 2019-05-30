@@ -13,8 +13,7 @@ body {
 
 button {
   flex: 1 1 60px;
-  width: 60px;
-  height: 60px;
+  padding: 1.5em;
 }
 
 #root {
