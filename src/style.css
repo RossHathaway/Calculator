@@ -1,0 +1,28 @@
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.calc {
+  border: 2px solid black;
+  max-width: 500px;
+  width: 90%;
+  height: 90%;
+  max-height: 750px;
+}
