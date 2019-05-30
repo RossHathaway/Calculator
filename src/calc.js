@@ -15,6 +15,7 @@ export default class Calc extends React.Component {
     };
     this.setDisplay = this.setDisplay.bind(this);
     this.submitNumber = this.submitNumber.bind(this);
+    this.clearScreen = this.clearScreen.bind(this);
   }
 
   setDisplay(val) {
@@ -32,15 +33,27 @@ export default class Calc extends React.Component {
     }
   }
 
+  clearScreen() {
+    this.setState({
+      firstNum: "",
+      sign: "",
+      secondNum: "",
+      operation: "",
+      display: ""
+    });
+  }
+
   render() {
-    const { currentNum, currentSign, prevNum, operation, display } = this.state;
+    const { firstNum, currentSign, prevNum, operation, display } = this.state;
     return (
       <div className="calc">
         <div className="screen">{display}</div>
         <div className="keys">
           <div className="left-keys">
             <div className="top-left-keys">
-              <button>{currentNum === "" ? "AC" : "C"}</button>
+              <button onClick={this.clearScreen}>
+                {firstNum === "" ? "AC" : "C"}
+              </button>
               <button>+/-</button>
               <button>%</button>
             </div>
