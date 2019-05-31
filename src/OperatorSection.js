@@ -18,7 +18,14 @@ const OperatorSection = function(props) {
           </button>
         );
       })}
-      <button className="btn-op">{/*onClick= evaluate */}=</button>
+      <button
+        className="btn-op"
+        onClick={function() {
+          props.calc();
+        }}
+      >
+        =
+      </button>
     </>
   );
 };

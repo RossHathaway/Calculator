@@ -14,14 +14,40 @@ export default class Calc extends React.Component {
       operation: "",
       display: ""
     };
-    this.setDisplay = this.setDisplay.bind(this);
     this.submitNumber = this.submitNumber.bind(this);
     this.clearScreen = this.clearScreen.bind(this);
     this.submitOperation = this.submitOperation.bind(this);
+    this.calculate = this.calculate.bind(this);
   }
 
-  setDisplay(val) {
-    this.setState({ display: val });
+  render() {
+    const { firstNum, display } = this.state;
+    return (
+      <div className="calc">
+        <div className="screen">{display}</div>
+        <div className="keys">
+          <div className="left-keys">
+            <div className="top-left-keys">
+              <button onClick={this.clearScreen}>
+                {firstNum === "" ? "AC" : "C"}
+              </button>
+              <button>+/-</button>
+              <button>%</button>
+            </div>
+            <NumberRow numbers={[7, 8, 9]} submitNumber={this.submitNumber} />
+            <NumberRow numbers={[4, 5, 6]} submitNumber={this.submitNumber} />
+            <NumberRow numbers={[1, 2, 3]} submitNumber={this.submitNumber} />
+            <NumberRow numbers={[0, "."]} submitNumber={this.submitNumber} />
+          </div>
+          <div className="right-keys">
+            <OperatorSection
+              submitOp={this.submitOperation}
+              calc={this.calculate}
+            />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   submitNumber(num) {
@@ -67,31 +93,19 @@ export default class Calc extends React.Component {
     }
   }
 
-  render() {
-    const { firstNum, sign, secondNum, operation, display } = this.state;
-    return (
-      <div className="calc">
-        <div className="screen">{display}</div>
-        <div className="keys">
-          <div className="left-keys">
-            <div className="top-left-keys">
-              <button onClick={this.clearScreen}>
-                {firstNum === "" ? "AC" : "C"}
-              </button>
-              <button>+/-</button>
-              <button>%</button>
-            </div>
-            <NumberRow numbers={[7, 8, 9]} submitNumber={this.submitNumber} />
-            <NumberRow numbers={[4, 5, 6]} submitNumber={this.submitNumber} />
-            <NumberRow numbers={[1, 2, 3]} submitNumber={this.submitNumber} />
-            <NumberRow numbers={[0, "."]} submitNumber={this.submitNumber} />
-          </div>
-          <div className="right-keys">
-            <OperatorSection submitOp={this.submitOperation} />
-          </div>
-        </div>
-      </div>
-    );
+  calculate(op = "") {
+    const { operation, firstNum, secondNum } = this.state;
+
+    if (secondNum !== "") {
+      const result = MathFunctions[operation](firstNum * 1, secondNum * 1);
+      this.setState({
+        firstNum: result,
+        secondNum: "",
+        sign: "",
+        operation: op,
+        display: result
+      });
+    }
   }
 }
 
