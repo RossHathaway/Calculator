@@ -23,14 +23,18 @@ export default class Calc extends React.Component {
   }
 
   submitNumber(num) {
-    if (this.state.operation === "") {
-      this.setState(state => {
-        return {
-          firstNum: this.state.firstNum + num,
-          display: this.state.firstNum + num
-        };
-      });
-    }
+    const { operation } = this.state;
+    const keyToChange = operation === "" ? "firstNum" : "secondNum";
+    const valToChange = this.state[keyToChange];
+    const newVal =
+      valToChange.includes(".") && num === "."
+        ? valToChange
+        : valToChange + num;
+
+    this.setState({
+      [keyToChange]: newVal,
+      display: newVal
+    });
   }
 
   clearScreen() {
@@ -44,7 +48,7 @@ export default class Calc extends React.Component {
   }
 
   render() {
-    const { firstNum, currentSign, prevNum, operation, display } = this.state;
+    const { firstNum, sign, secondNum, operation, display } = this.state;
     return (
       <div className="calc">
         <div className="screen">{display}</div>
