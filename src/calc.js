@@ -2,20 +2,22 @@ import React from "react";
 import ReactDOM from "react-dom";
 import NumberRow from "./NumberRow";
 import OperatorSection from "./OperatorSection";
+import MathFunctions from "./MathFunctions";
 
 export default class Calc extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       firstNum: "",
-      sign: "",
       secondNum: "",
+      sign: "",
       operation: "",
       display: ""
     };
     this.setDisplay = this.setDisplay.bind(this);
     this.submitNumber = this.submitNumber.bind(this);
     this.clearScreen = this.clearScreen.bind(this);
+    this.submitOperation = this.submitOperation.bind(this);
   }
 
   setDisplay(val) {
@@ -26,10 +28,10 @@ export default class Calc extends React.Component {
     const { operation } = this.state;
     const keyToChange = operation === "" ? "firstNum" : "secondNum";
     const valToChange = this.state[keyToChange];
-    const newVal =
-      valToChange.includes(".") && num === "."
-        ? valToChange
-        : valToChange + num;
+    const newVal = (valToChange.includes(".") && num === "."
+      ? valToChange
+      : valToChange + num
+    ).toString();
 
     this.setState({
       [keyToChange]: newVal,
@@ -40,11 +42,29 @@ export default class Calc extends React.Component {
   clearScreen() {
     this.setState({
       firstNum: "",
-      sign: "",
       secondNum: "",
+      sign: "",
       operation: "",
       display: ""
     });
+  }
+
+  submitOperation(op) {
+    const { operation, firstNum, secondNum } = this.state;
+
+    if (operation === "") {
+      this.setState({ operation: op });
+    } else {
+      const result = MathFunctions[operation](firstNum * 1, secondNum * 1);
+
+      this.setState({
+        firstNum: result,
+        secondNum: "",
+        sign: "",
+        operation: op,
+        display: result
+      });
+    }
   }
 
   render() {
@@ -67,7 +87,7 @@ export default class Calc extends React.Component {
             <NumberRow numbers={[0, "."]} submitNumber={this.submitNumber} />
           </div>
           <div className="right-keys">
-            <OperatorSection />
+            <OperatorSection submitOp={this.submitOperation} />
           </div>
         </div>
       </div>
