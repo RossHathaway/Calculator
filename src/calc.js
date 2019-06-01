@@ -115,7 +115,8 @@ export default class Calc extends React.Component {
       }
 
       return {
-        [keyToChange]: updatedNum
+        [keyToChange]: updatedNum,
+        display: updatedNum
       };
     });
   }
