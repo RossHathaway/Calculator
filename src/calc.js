@@ -70,7 +70,7 @@ export default class Calc extends React.Component {
     this.setState({
       firstNum: "",
       secondNum: "",
-      sign: "",
+      firstNumActive: true,
       operation: "",
       display: ""
     });
@@ -80,22 +80,23 @@ export default class Calc extends React.Component {
     const { operation } = this.state;
 
     if (operation === "") {
-      this.setState({ operation: op });
+      this.setState({ operation: op, firstNumActive: false });
     } else {
       this.calculate(op);
     }
   }
 
   calculate(op = "") {
-    const { sign, operation, firstNum, secondNum } = this.state;
+    const { operation, firstNum, secondNum } = this.state;
 
     if (secondNum !== "") {
-      const result =
-        sign + String(MathFunctions[operation](firstNum * 1, secondNum * 1));
+      const result = String(
+        MathFunctions[operation](firstNum * 1, secondNum * 1)
+      );
       this.setState({
         firstNum: result,
         secondNum: "",
-        sign: "",
+        firstNumActive: false,
         operation: op,
         display: result
       });
@@ -105,7 +106,7 @@ export default class Calc extends React.Component {
   changeSign() {
     this.setState(state => {
       const keyToChange = state.firstNumActive ? "firstNum" : "secondNum";
-      const updatedNum = null;
+      let updatedNum = null;
 
       if (state[keyToChange][0] === "-") {
         updatedNum = state[keyToChange].slice(1);
