@@ -54,8 +54,8 @@ export default class Calc extends React.Component {
   }
 
   submitNumber(num) {
-    const { operation } = this.state;
-    const keyToChange = operation === "" ? "firstNum" : "secondNum";
+    const { firstNumActive } = this.state;
+    const keyToChange = firstNumActive ? "firstNum" : "secondNum";
     const valToChange = this.state[keyToChange];
     const updatedNum =
       valToChange.includes(".") && num === "."
@@ -80,12 +80,14 @@ export default class Calc extends React.Component {
   }
 
   submitOperation(op) {
-    const { operation } = this.state;
+    const { firstNumActive, operation } = this.state;
 
-    if (operation === "") {
+    if (firstNumActive) {
       this.setState({ operation: op, firstNumActive: false });
-    } else {
+    } else if (operation) {
       this.calculate(op);
+    } else {
+      this.setState({ operation: op });
     }
   }
 
@@ -125,11 +127,8 @@ export default class Calc extends React.Component {
   }
 
   percent() {
-    // if firstNumActive (no operation)
-    // change op to /, secondNum to 100, and calculate result
-    // otherwise (there must be an operation)
-    // set percent to opposite of itself
     const { firstNumActive } = this.state;
+
     if (firstNumActive) {
       this.setState(
         {
@@ -138,6 +137,10 @@ export default class Calc extends React.Component {
         },
         () => this.calculate()
       );
+    } else {
+      this.setState(state => {
+        return { percent: !state.percent };
+      });
     }
   }
 }
