@@ -10,7 +10,7 @@ export default class Calc extends React.Component {
     this.state = {
       firstNum: "",
       secondNum: "",
-      sign: "",
+      firstNumActive: true,
       operation: "",
       display: ""
     };
@@ -18,6 +18,7 @@ export default class Calc extends React.Component {
     this.clearScreen = this.clearScreen.bind(this);
     this.submitOperation = this.submitOperation.bind(this);
     this.calculate = this.calculate.bind(this);
+    this.changeSign = this.changeSign.bind(this);
   }
 
   render() {
@@ -31,7 +32,7 @@ export default class Calc extends React.Component {
               <button onClick={this.clearScreen}>
                 {firstNum === "" ? "AC" : "C"}
               </button>
-              <button>+/-</button>
+              <button onClick={this.changeSign}>+/-</button>
               <button>%</button>
             </div>
             <NumberRow numbers={[7, 8, 9]} submitNumber={this.submitNumber} />
@@ -54,14 +55,14 @@ export default class Calc extends React.Component {
     const { operation } = this.state;
     const keyToChange = operation === "" ? "firstNum" : "secondNum";
     const valToChange = this.state[keyToChange];
-    const newVal = (valToChange.includes(".") && num === "."
-      ? valToChange
-      : valToChange + num
-    ).toString();
+    const updatedNum =
+      valToChange.includes(".") && num === "."
+        ? valToChange
+        : valToChange + num;
 
     this.setState({
-      [keyToChange]: newVal,
-      display: newVal
+      [keyToChange]: updatedNum,
+      display: updatedNum
     });
   }
 
@@ -76,13 +77,21 @@ export default class Calc extends React.Component {
   }
 
   submitOperation(op) {
-    const { operation, firstNum, secondNum } = this.state;
+    const { operation } = this.state;
 
     if (operation === "") {
       this.setState({ operation: op });
     } else {
-      const result = MathFunctions[operation](firstNum * 1, secondNum * 1);
+      this.calculate(op);
+    }
+  }
 
+  calculate(op = "") {
+    const { sign, operation, firstNum, secondNum } = this.state;
+
+    if (secondNum !== "") {
+      const result =
+        sign + String(MathFunctions[operation](firstNum * 1, secondNum * 1));
       this.setState({
         firstNum: result,
         secondNum: "",
@@ -93,19 +102,21 @@ export default class Calc extends React.Component {
     }
   }
 
-  calculate(op = "") {
-    const { operation, firstNum, secondNum } = this.state;
+  changeSign() {
+    this.setState(state => {
+      const keyToChange = state.firstNumActive ? "firstNum" : "secondNum";
+      const updatedNum = null;
 
-    if (secondNum !== "") {
-      const result = MathFunctions[operation](firstNum * 1, secondNum * 1);
-      this.setState({
-        firstNum: result,
-        secondNum: "",
-        sign: "",
-        operation: op,
-        display: result
-      });
-    }
+      if (state[keyToChange][0] === "-") {
+        updatedNum = state[keyToChange].slice(1);
+      } else {
+        updatedNum = "-" + state[keyToChange];
+      }
+
+      return {
+        [keyToChange]: updatedNum
+      };
+    });
   }
 }
 
