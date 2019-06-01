@@ -12,13 +12,15 @@ export default class Calc extends React.Component {
       secondNum: "",
       firstNumActive: true,
       operation: "",
-      display: ""
+      display: "",
+      percent: false
     };
     this.submitNumber = this.submitNumber.bind(this);
     this.clearScreen = this.clearScreen.bind(this);
     this.submitOperation = this.submitOperation.bind(this);
     this.calculate = this.calculate.bind(this);
     this.changeSign = this.changeSign.bind(this);
+    this.percent = this.percent.bind(this);
   }
 
   render() {
@@ -33,7 +35,7 @@ export default class Calc extends React.Component {
                 {firstNum === "" ? "AC" : "C"}
               </button>
               <button onClick={this.changeSign}>+/-</button>
-              <button>%</button>
+              <button onClick={this.percent}>%</button>
             </div>
             <NumberRow numbers={[7, 8, 9]} submitNumber={this.submitNumber} />
             <NumberRow numbers={[4, 5, 6]} submitNumber={this.submitNumber} />
@@ -72,7 +74,8 @@ export default class Calc extends React.Component {
       secondNum: "",
       firstNumActive: true,
       operation: "",
-      display: ""
+      display: "",
+      percent: false
     });
   }
 
@@ -119,6 +122,23 @@ export default class Calc extends React.Component {
         display: updatedNum
       };
     });
+  }
+
+  percent() {
+    // if firstNumActive (no operation)
+    // change op to /, secondNum to 100, and calculate result
+    // otherwise (there must be an operation)
+    // set percent to opposite of itself
+    const { firstNumActive } = this.state;
+    if (firstNumActive) {
+      this.setState(
+        {
+          operation: "/",
+          secondNum: "100"
+        },
+        () => this.calculate()
+      );
+    }
   }
 }
 
