@@ -13,7 +13,8 @@ export default class Calc extends React.Component {
       firstNumActive: true,
       operation: "",
       display: "",
-      percent: false
+      firstPercent: false,
+      secondPercent: false
     };
     this.submitNumber = this.submitNumber.bind(this);
     this.clearScreen = this.clearScreen.bind(this);
@@ -54,8 +55,15 @@ export default class Calc extends React.Component {
   }
 
   submitNumber(num) {
-    const { firstNumActive, percent } = this.state;
-    const keyToChange = firstNumActive ? "firstNum" : "secondNum";
+    const { firstNumActive, firstPercent, secondPercent } = this.state;
+    let percent, keyToChange;
+    if (firstNumActive) {
+      keyToChange = "firstNum";
+      percent = firstPercent ? " %" : "";
+    } else {
+      keyToChange = "secondNum";
+      percent = secondPercent ? " %" : "";
+    }
     const valToChange = this.state[keyToChange];
     const updatedNum =
       valToChange.includes(".") && num === "."
@@ -64,7 +72,7 @@ export default class Calc extends React.Component {
 
     this.setState({
       [keyToChange]: updatedNum,
-      display: updatedNum + (percent ? " %" : "")
+      display: updatedNum + percent
     });
   }
 
@@ -75,7 +83,8 @@ export default class Calc extends React.Component {
       firstNumActive: true,
       operation: "",
       display: "",
-      percent: false
+      firstPercent: false,
+      secondPercent: false
     });
   }
 
@@ -105,7 +114,9 @@ export default class Calc extends React.Component {
         secondNum: "",
         firstNumActive: false,
         operation: op,
-        display: result
+        display: result,
+        firstPercent: false,
+        secondPercent: false
       });
     }
   }
@@ -130,11 +141,13 @@ export default class Calc extends React.Component {
 
   percent() {
     this.setState(state => {
+      const { firstNumActive, display } = state;
+      const keyToChange = firstNumActive ? "firstPercent" : "secondPercent";
       return {
-        percent: !state.percent,
-        display: state.percent
-          ? state.display.slice(0, state.display.length - 2)
-          : state.display + " %"
+        [keyToChange]: !state[keyToChange],
+        display: state[keyToChange]
+          ? display.slice(0, display.length - 2)
+          : display + " %"
       };
     });
   }
