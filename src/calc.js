@@ -56,6 +56,7 @@ export default class Calc extends React.Component {
 
   submitNumber(num) {
     const { firstNumActive, firstPercent, secondPercent } = this.state;
+
     let percent, keyToChange;
     if (firstNumActive) {
       keyToChange = "firstNum";
@@ -64,6 +65,7 @@ export default class Calc extends React.Component {
       keyToChange = "secondNum";
       percent = secondPercent ? " %" : "";
     }
+
     const valToChange = this.state[keyToChange];
     const updatedNum =
       valToChange.includes(".") && num === "."
@@ -103,22 +105,66 @@ export default class Calc extends React.Component {
   }
 
   calculate(op = "") {
-    const { operation, firstNum, secondNum } = this.state;
+    const {
+      operation,
+      firstNum,
+      secondNum,
+      firstPercent,
+      secondPercent
+    } = this.state;
+
+    let firstNumConv = firstNum * 1;
+    let secondNumConv = secondNum * 1;
+    let updatedFirstPercent = false;
+
+    if (firstNumConv + "" === "NaN" || secondNumConv + "" === "NaN") return;
 
     if (secondNum !== "") {
+      if (firstPercent && secondPercent) {
+        // regular calc
+        updatedFirstPercent = true;
+      } else if (firstPercent || secondPercent) {
+        // convert num with percentage to the value that is given % of other number
+        // use that calculated percentage of other number in calculation
+        // firstPercent set to false
+        if (firstPercent) {
+          firstNumConv = (secondNumConv * firstNumConv) / 100;
+        } else {
+          secondNumConv = (firstNumConv * secondNumConv) / 100;
+        }
+      } else {
+        // regular calc, firstPercent set to false
+      }
+
       const result = String(
-        MathFunctions[operation](firstNum * 1, secondNum * 1)
+        MathFunctions[operation](firstNumConv, secondNumConv)
       );
+
       this.setState({
         firstNum: result,
         secondNum: "",
         firstNumActive: false,
         operation: op,
         display: result,
-        firstPercent: false,
+        firstPercent: updatedFirstPercent,
         secondPercent: false
       });
+    } else if (firstPercent) {
+      // calculate and set first percent to false after
+      this.setState(state => {
+        const result = String(state.firstNum / 100);
+        return {
+          firstNum: result,
+          secondNum: "",
+          firstNumActive: false,
+          operation: "",
+          display: result,
+          firstPercent: false,
+          secondPercent: false
+        };
+      });
     }
+    // else do nothing
   }
 
   changeSign() {
