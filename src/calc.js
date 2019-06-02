@@ -132,7 +132,9 @@ export default class Calc extends React.Component {
     this.setState(state => {
       return {
         percent: !state.percent,
-        display: state.display + (state.percent ? "" : " %")
+        display: state.percent
+          ? state.display.slice(0, state.display.length - 2)
+          : state.display + " %"
       };
     });
   }
