@@ -1,7 +1,7 @@
 import React from "react";
 
 const NumberRow = props => (
-  <div className="bottom">
+  <>
     {props.numbers.map(function makeNumBtn(num) {
       return (
         <button
@@ -15,7 +15,7 @@ const NumberRow = props => (
         </button>
       );
     })}
-  </div>
+  </>
 );
 
 export default NumberRow;

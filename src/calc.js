@@ -32,30 +32,25 @@ export default class Calc extends React.Component {
           <div className="history">1 + 1 history</div>
           <div className="result">{display}</div>
         </div>
-        <div className="keys">
-          <div className="left">
-            <div className="top">
-              <button onClick={this.clearScreen}>
-                {firstNum === "" ? "AC" : "C"}
-              </button>
-              <button onClick={this.changeSign}>+/-</button>
-              <button onClick={this.percent}>%</button>
-            </div>
-            <NumberRow numbers={[7, 8, 9]} submitNumber={this.submitNumber} />
-            <NumberRow numbers={[4, 5, 6]} submitNumber={this.submitNumber} />
-            <NumberRow numbers={[1, 2, 3]} submitNumber={this.submitNumber} />
-            <NumberRow
-              numbers={[0, "."]}
-              submitNumber={this.submitNumber}
-              className="zero-decimal"
-            />
-          </div>
-          <div className="right">
-            <OperatorSection
-              submitOp={this.submitOperation}
-              calc={this.calculate}
-            />
-          </div>
+        <div className="keypad">
+          <button onClick={this.clearScreen}>
+            {firstNum === "" ? "AC" : "C"}
+          </button>
+          <button onClick={this.changeSign}>+/-</button>
+          <button onClick={this.percent}>%</button>
+          <NumberRow numbers={[7, 8, 9]} submitNumber={this.submitNumber} />
+          <NumberRow numbers={[4, 5, 6]} submitNumber={this.submitNumber} />
+          <NumberRow numbers={[1, 2, 3]} submitNumber={this.submitNumber} />
+          <NumberRow
+            numbers={[0, "."]}
+            submitNumber={this.submitNumber}
+            className="zero-decimal"
+          />
+
+          <OperatorSection
+            submitOp={this.submitOperation}
+            calc={this.calculate}
+          />
         </div>
       </div>
     );
