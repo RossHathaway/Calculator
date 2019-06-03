@@ -28,10 +28,13 @@ export default class Calc extends React.Component {
     const { firstNum, display } = this.state;
     return (
       <div className="calc">
-        <div className="screen">{display}</div>
+        <div className="screen">
+          <div className="history">1 + 1 history</div>
+          <div className="result">{display}</div>
+        </div>
         <div className="keys">
-          <div className="left-keys">
-            <div className="top-left-keys">
+          <div className="left">
+            <div className="top">
               <button onClick={this.clearScreen}>
                 {firstNum === "" ? "AC" : "C"}
               </button>
@@ -41,9 +44,13 @@ export default class Calc extends React.Component {
             <NumberRow numbers={[7, 8, 9]} submitNumber={this.submitNumber} />
             <NumberRow numbers={[4, 5, 6]} submitNumber={this.submitNumber} />
             <NumberRow numbers={[1, 2, 3]} submitNumber={this.submitNumber} />
-            <NumberRow numbers={[0, "."]} submitNumber={this.submitNumber} />
+            <NumberRow
+              numbers={[0, "."]}
+              submitNumber={this.submitNumber}
+              className="zero-decimal"
+            />
           </div>
-          <div className="right-keys">
+          <div className="right">
             <OperatorSection
               submitOp={this.submitOperation}
               calc={this.calculate}

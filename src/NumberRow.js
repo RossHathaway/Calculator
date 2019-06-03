@@ -1,7 +1,7 @@
 import React from "react";
 
 const NumberRow = props => (
-  <div className="bottom-left-keys">
+  <div className="bottom">
     {props.numbers.map(function makeNumBtn(num) {
       return (
         <button

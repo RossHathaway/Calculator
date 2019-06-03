@@ -12,8 +12,10 @@ body {
 }
 
 button {
-  flex: 1 1 60px;
+  /* flex: 1 1 60px; */
   padding: 1.5em;
+  border: none;
+  border-top: 1px solid black;
 }
 
 #root {
@@ -30,30 +32,52 @@ button {
   width: 90%;
   height: 90%;
   max-height: 750px;
-}
-
-.screen {
-  height: 25%;
-}
-
-.keys {
-  display: flex;
-}
-
-.left-keys {
-  flex: 1;
-}
-
-.right-keys {
   display: flex;
   flex-direction: column;
 }
 
-.top-left-keys {
+.screen {
+  flex-basis: 25%;
+  background-color: black;
+  color: white;
+}
+
+.keys {
+  flex-basis: 75%;
   display: flex;
 }
 
-.bottom-left-keys {
+.keys .left {
+  flex: 1;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.keys .left .top {
+  display: flex;
+}
+
+.keys .left .top button {
+  background-color: #c9cacc;
+}
+
+.keys .left .bottom {
+  display: flex;
+  /* flex-wrap: wrap; */
+}
+
+.keys .left .bottom button {
+  background-color: #d4d6d7;
+}
+
+.keys .right {
+  display: flex;
+  flex-direction: column;
+}
+
+.keys .right button {
+  background-color: #f98812;
+  color: white;
+  border-left: 1px solid black;
+  border-right: none;
 }
