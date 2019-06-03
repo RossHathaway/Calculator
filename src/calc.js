@@ -116,11 +116,11 @@ export default class Calc extends React.Component {
   }
 
   submitOperation(op) {
-    const { firstNumActive, operation } = this.state;
+    const { secondNum, firstNumActive, operation } = this.state;
 
     if (firstNumActive) {
       this.setState({ operation: op, firstNumActive: false });
-    } else if (operation) {
+    } else if (operation && secondNum !== "") {
       // if this is the second or farther in a chain of calculaions made without using = sign
       this.calculate(op);
     } else {
