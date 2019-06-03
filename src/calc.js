@@ -194,6 +194,23 @@ export default class Calc extends React.Component {
   }
 
   changeSign() {
+    const { firstNumActive, operation } = this.state;
+    if (!firstNumActive && operation === "") {
+      // after calculation has been performed
+      // a new number is being submitted, so need to clear old numbers
+      this.setState({
+        firstNum: "-",
+        secondNum: "",
+        firstNumActive: true,
+        operation: "",
+        display: "-",
+        firstPercent: false,
+        secondPercent: false
+      });
+      // do not complete anything more in this function
+      return;
+    }
+
     this.setState(state => {
       const keyToChange = state.firstNumActive ? "firstNum" : "secondNum";
       let updatedNum = null;
