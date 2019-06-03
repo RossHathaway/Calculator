@@ -12,9 +12,9 @@ body {
 }
 
 button {
-  padding: 1.5em;
   border: 0.5px;
   border: none;
+  font-size: 5vh;
 }
 
 #root {
@@ -39,6 +39,17 @@ button {
   flex-basis: 25%;
   background-color: black;
   color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.result {
+  text-align: right;
+  vertical-align: bottom;
+  font-size: 10vh;
+  flex: 1;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .keypad {
