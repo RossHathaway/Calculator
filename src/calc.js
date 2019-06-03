@@ -61,12 +61,31 @@ export default class Calc extends React.Component {
   }
 
   submitNumber(num) {
-    const { firstNumActive, firstPercent, secondPercent } = this.state;
+    const {
+      firstNumActive,
+      operation,
+      firstPercent,
+      secondPercent
+    } = this.state;
 
     let percent, keyToChange;
     if (firstNumActive) {
       keyToChange = "firstNum";
       percent = firstPercent ? " %" : "";
+    } else if (operation === "") {
+      // after calculation has been performed
+      // a new number is being submitted, so need to clear old numbers
+      this.setState({
+        firstNum: num,
+        secondNum: "",
+        firstNumActive: true,
+        operation: "",
+        display: num,
+        firstPercent: false,
+        secondPercent: false
+      });
+      // do not complete anything more in this function
+      return;
     } else {
       keyToChange = "secondNum";
       percent = secondPercent ? " %" : "";
