@@ -33,11 +33,15 @@ export default class Calc extends React.Component {
           <div className="result">{display}</div>
         </div>
         <div className="keypad">
-          <button onClick={this.clearScreen}>
+          <button onClick={this.clearScreen} className="top">
             {firstNum === "" ? "AC" : "C"}
           </button>
-          <button onClick={this.changeSign}>+/-</button>
-          <button onClick={this.percent}>%</button>
+          <button onClick={this.changeSign} className="top">
+            +/-
+          </button>
+          <button onClick={this.percent} className="top">
+            %
+          </button>
           <NumberRow numbers={[7, 8, 9]} submitNumber={this.submitNumber} />
           <NumberRow numbers={[4, 5, 6]} submitNumber={this.submitNumber} />
           <NumberRow numbers={[1, 2, 3]} submitNumber={this.submitNumber} />

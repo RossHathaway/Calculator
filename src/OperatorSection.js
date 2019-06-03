@@ -4,7 +4,7 @@ const OperatorSection = function(props) {
   const operators = ["/", "x", "-", "+"];
 
   return (
-    <>
+    <div className="operators">
       {operators.map(function makeOpBtn(op) {
         return (
           <button
@@ -26,7 +26,7 @@ const OperatorSection = function(props) {
       >
         =
       </button>
-    </>
+    </div>
   );
 };
 

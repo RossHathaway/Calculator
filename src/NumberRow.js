@@ -1,11 +1,11 @@
 import React from "react";
 
 const NumberRow = props => (
-  <>
+  <div className="number-row">
     {props.numbers.map(function makeNumBtn(num) {
       return (
         <button
-          className="btn-number"
+          className={`btn-number ${num === 0 ? "zero" : "not-zero"}`}
           onClick={function() {
             props.submitNumber(num);
           }}
@@ -15,7 +15,7 @@ const NumberRow = props => (
         </button>
       );
     })}
-  </>
+  </div>
 );
 
 export default NumberRow;

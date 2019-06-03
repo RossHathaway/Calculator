@@ -13,8 +13,8 @@ body {
 
 button {
   padding: 1.5em;
+  border: 0.5px;
   border: none;
-  border-top: 1px solid black;
 }
 
 #root {
@@ -48,17 +48,40 @@ button {
   grid-template-rows: 20% 20% 20% 20% 20%;
 }
 
-.keys .left .top button {
+.top {
   background-color: #c9cacc;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
 }
 
-.keys .left .bottom button {
-  background-color: #d4d6d7;
+.operators {
+  grid-area: 1 / 4 / 6 / 5;
+  display: flex;
+  flex-direction: column;
 }
 
-.keys .right button {
+.btn-op {
   background-color: #f98812;
   color: white;
-  border-left: 1px solid black;
+  border-top: 1px solid black;
   border-right: none;
+  height: 20%;
+}
+
+.number-row {
+  grid-column: 1 / 4;
+  display: grid;
+  grid-template-columns: 33.3333% 33.3333% 33.3333%;
+}
+
+.btn-number {
+  background-color: #d4d6d7;
+  flex: 1;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+}
+
+.zero {
+  flex-grow: 2.5;
+  grid-column: 1 / 3;
 }
