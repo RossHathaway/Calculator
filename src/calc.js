@@ -132,6 +132,7 @@ export default class Calc extends React.Component {
       } else if (firstPercent || secondPercent) {
         // convert num with percentage to the value that is given % of other number
         // use that calculated percentage of other number in calculation
+        // (A% + B = (A / 100 * B) + B)
         // firstPercent set to false
         if (firstPercent) {
           firstNumConv = (secondNumConv * firstNumConv) / 100;
@@ -139,7 +140,7 @@ export default class Calc extends React.Component {
           secondNumConv = (firstNumConv * secondNumConv) / 100;
         }
       } else {
-        // regular calc, firstPercent set to false
+        // regular calc - firstPercent set to false
       }
 
       const result = String(
@@ -151,7 +152,7 @@ export default class Calc extends React.Component {
         secondNum: "",
         firstNumActive: false,
         operation: op,
-        display: result,
+        display: result + (updatedFirstPercent ? " %" : ""),
         firstPercent: updatedFirstPercent,
         secondPercent: false
       });
