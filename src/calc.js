@@ -90,7 +90,6 @@ export default class Calc extends React.Component {
       keyToChange = "secondNum";
       percent = secondPercent ? " %" : "";
     }
-
     const valToChange = this.state[keyToChange];
     const updatedNum =
       valToChange.includes(".") && num === "."
@@ -194,7 +193,13 @@ export default class Calc extends React.Component {
   }
 
   changeSign() {
-    const { secondNum, firstNumActive, operation, firstPercent } = this.state;
+    const {
+      secondNum,
+      firstNumActive,
+      operation,
+      firstPercent,
+      secondPercent
+    } = this.state;
 
     this.setState(state => {
       let keyToChange, updatedNum, percent;
@@ -226,9 +231,42 @@ export default class Calc extends React.Component {
   }
 
   percent() {
+    //   this.setState(state => {
+    //     const { firstNumActive, display } = state;
+    //     const keyToChange = firstNumActive ? "firstPercent" : "secondPercent";
+    //     return {
+    //       [keyToChange]: !state[keyToChange],
+    //       display: state[keyToChange]
+    //         ? display.slice(0, display.length - 2)
+    //         : display + " %"
+    //     };
+    //   });
+    const {
+      secondNum,
+      firstNumActive,
+      operation,
+      display,
+      firstPercent,
+      secondPercent
+    } = this.state;
+
     this.setState(state => {
-      const { firstNumActive, display } = state;
-      const keyToChange = firstNumActive ? "firstPercent" : "secondPercent";
+      let keyToChange, updatedNum, percent;
+
+      if (
+        (!firstNumActive && operation === "" && secondNum === "") ||
+        state.firstNumActive
+      ) {
+        // after calculation has been performed, toggle result's %.
+        // result is stored in firstNum
+        // this is also for when user is still entering first number
+        keyToChange = "firstPercent";
+        percent = firstPercent ? "" : " %";
+      } else {
+        keyToChange = "secondPercent";
+        percent = secondPercent ? "" : " %";
+      }
+
       return {
         [keyToChange]: !state[keyToChange],
         display: state[keyToChange]
