@@ -14,7 +14,8 @@ export default class Calc extends React.Component {
       operation: "",
       display: "",
       firstPercent: false,
-      secondPercent: false
+      secondPercent: false,
+      history: ""
     };
     this.submitNumber = this.submitNumber.bind(this);
     this.clearScreen = this.clearScreen.bind(this);
@@ -25,11 +26,20 @@ export default class Calc extends React.Component {
   }
 
   render() {
-    const { firstNum, display } = this.state;
+    const {
+      firstNum,
+      secondNum,
+      operation,
+      display,
+      firstPercent,
+      secondPercent
+    } = this.state;
     return (
       <div className="calc">
         <div className="screen">
-          <div className="history">1 + 1 history</div>
+          <div className="history">{`${firstNum}${
+            firstPercent ? " %" : ""
+          } ${operation} ${secondNum} ${secondPercent ? " % " : ""}`}</div>
           <div className="result">{display}</div>
         </div>
         <div className="keypad">
@@ -96,9 +106,12 @@ export default class Calc extends React.Component {
         ? valToChange
         : valToChange + num;
 
-    this.setState({
-      [keyToChange]: updatedNum,
-      display: updatedNum + percent
+    this.setState(state => {
+      return {
+        [keyToChange]: updatedNum,
+        display: updatedNum + percent,
+        history: state.history + updatedNum + percent
+      };
     });
   }
 
@@ -110,7 +123,8 @@ export default class Calc extends React.Component {
       operation: "",
       display: "",
       firstPercent: false,
-      secondPercent: false
+      secondPercent: false,
+      history: ""
     });
   }
 
@@ -118,13 +132,26 @@ export default class Calc extends React.Component {
     const { secondNum, firstNumActive, operation } = this.state;
 
     if (firstNumActive) {
-      this.setState({ operation: op, firstNumActive: false });
+      this.setState(state => {
+        return {
+          operation: op,
+          firstNumActive: false,
+          display: op,
+          history: state.history + ` ${op} `
+        };
+      });
     } else if (operation && secondNum !== "") {
       // if this is the second or farther in a chain of calculaions made without using = sign
       this.calculate(op);
     } else {
       // after equal button is used to do a calculation
-      this.setState({ operation: op });
+      this.setState(state => {
+        return {
+          operation: op,
+          display: op,
+          history: state.history + ` ${op} `
+        };
+      });
     }
   }
 
@@ -231,16 +258,6 @@ export default class Calc extends React.Component {
   }
 
   percent() {
-    //   this.setState(state => {
-    //     const { firstNumActive, display } = state;
-    //     const keyToChange = firstNumActive ? "firstPercent" : "secondPercent";
-    //     return {
-    //       [keyToChange]: !state[keyToChange],
-    //       display: state[keyToChange]
-    //         ? display.slice(0, display.length - 2)
-    //         : display + " %"
-    //     };
-    //   });
     const {
       secondNum,
       firstNumActive,
