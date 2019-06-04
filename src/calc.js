@@ -133,7 +133,9 @@ export default class Calc extends React.Component {
   }
 
   submitOperation(op) {
-    const { secondNum, firstNumActive, operation } = this.state;
+    const { firstNum, secondNum, firstNumActive, operation } = this.state;
+
+    if (firstNum === "." || secondNum === ".") return;
 
     if (firstNumActive) {
       this.setState(state => {
