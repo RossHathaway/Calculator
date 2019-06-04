@@ -194,16 +194,22 @@ export default class Calc extends React.Component {
   }
 
   changeSign() {
-    const { secondNum, firstNumActive, operation } = this.state;
+    const { secondNum, firstNumActive, operation, firstPercent } = this.state;
 
     this.setState(state => {
-      let keyToChange, updatedNum;
+      let keyToChange, updatedNum, percent;
 
-      if (!firstNumActive && operation === "" && secondNum === "") {
+      if (
+        (!firstNumActive && operation === "" && secondNum === "") ||
+        state.firstNumActive
+      ) {
         // after calculation has been performed, change sign of result, which is stored in firstNum
+        // or if user is still entering first number
         keyToChange = "firstNum";
+        percent = firstPercent ? " %" : "";
       } else {
-        keyToChange = state.firstNumActive ? "firstNum" : "secondNum";
+        keyToChange = "secondNum";
+        percent = secondPercent ? " %" : "";
       }
 
       if (state[keyToChange][0] === "-") {
@@ -214,7 +220,7 @@ export default class Calc extends React.Component {
 
       return {
         [keyToChange]: updatedNum,
-        display: updatedNum
+        display: updatedNum + percent
       };
     });
   }
